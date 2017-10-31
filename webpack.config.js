@@ -1,12 +1,13 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
+    path: path.resolve(__dirname, 'dist'),
+    // publicPath: '/dist/',
+    filename: 'su.[chunkHash].js'
   },
   module: {
     rules: [
@@ -36,7 +37,13 @@ module.exports = {
           name: '[name].[ext]?[hash]'
         }
       }
-    ]
+    ],
+    loaders: [
+      {
+        test: /\.html$/,
+        loader: 'html-loader'
+      }
+    ],
   },
   resolve: {
     alias: {
@@ -51,8 +58,19 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
-}
+  devtool: '#eval-source-map',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+      inject: 'body',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true
+      }
+    })
+  ]
+};
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
