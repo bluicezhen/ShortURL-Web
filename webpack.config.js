@@ -4,6 +4,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
+  externals: {
+    'vue': 'Vue',
+    'vue-router': 'VueRouter'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     // publicPath: '/dist/',
