@@ -35,6 +35,11 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.sass$/,
+        loader: 'sass-loader',
+        exclude: /node_modules/
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
