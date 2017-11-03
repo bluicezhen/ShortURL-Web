@@ -17,7 +17,19 @@
 </template>
 
 <script>
-  export default {};
+  import axios from 'axios';
+
+  export default {
+    created () {
+      axios.post('http://localhost:8888/', {
+        'url': "http://www.baidu.com"
+      }).then(function (response) {
+        console.log(response.data.short_url)
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  };
 </script>
 
 <style lang="scss">

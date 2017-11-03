@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/main.js',
   externals: {
     'vue': 'Vue',
-    'vue-router': 'VueRouter'
+    'vue-router': 'VueRouter',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
