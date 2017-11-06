@@ -35,7 +35,7 @@
           alert("Illegal URL");
           return;
         }
-        axios.post('http://localhost:8888/', {'url': self.urlFull})
+        axios.post(window.config.serverAddress + '/', {'url': self.urlFull})
           .then(function (response) {
             self.urlShort = response.data.short_url;
             self.showRes = true;

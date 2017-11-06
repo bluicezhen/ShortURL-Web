@@ -2,8 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+var config_file = './src/conf_dev.js';
+
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    main: './src/main.js',
+    config: config_file
+  },
   externals: {
     'vue': 'Vue',
     'vue-router': 'VueRouter',
@@ -11,7 +16,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'su.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -85,7 +90,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.output = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'su.[chunkHash].js'
+    filename: '[name].[chunkHash].js'
   };
   module.exports.devtool = '#source-map';
   // http://vue-loader.vuejs.org/en/workflow/production.html
