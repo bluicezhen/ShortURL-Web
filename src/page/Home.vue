@@ -3,15 +3,15 @@
     <div class="input">
       <div class="form">
         <div class="i">
-          <input type="text" placeholder="Input full URL here, like: https://www.google.com"/>
+          <input type="text" placeholder="Input full URL here, like: https://www.google.com" v-model="urlFull"/>
         </div>
         <div class="b">
-          <button>Make Short</button>
+          <button @click="getUrlShort()">Make Short</button>
         </div>
       </div>
     </div>
     <div class="result">
-
+      <p v-show="showRes">Your short url: <a :href="urlShort" target="_blank">{{ urlShort }}</a></p>
     </div>
   </div>
 </template>
@@ -20,14 +20,30 @@
   import axios from 'axios';
 
   export default {
-    created () {
-      axios.post('http://localhost:8888/', {
-        'url': "http://www.baidu.com"
-      }).then(function (response) {
-        console.log(response.data.short_url)
-      }).catch(function (error) {
-        console.log(error);
-      });
+    data() {
+      return {
+        showRes: false,
+        urlFull: '',
+        urlShort: ''
+      }
+    },
+    methods: {
+      getUrlShort() {
+        let self = this;
+        let matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
+        if (!matcher.test(self.urlFull)) {
+          alert("Illegal URL");
+          return;
+        }
+        axios.post('http://localhost:8888/', {'url': self.urlFull})
+          .then(function (response) {
+            self.urlShort = response.data.short_url;
+            self.showRes = true;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
   };
 </script>
@@ -73,6 +89,7 @@
     }
     .result {
       flex-grow: 1;
+      text-align: center;
     }
   }
 
